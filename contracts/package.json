@@ -1,0 +1,29 @@
+{
+  "name": "zk-participation-contracts",
+  "version": "0.1.0",
+  "description": "Clinical Trial Credential System — Confidential smart contracts for ZK proof of participation on Midnight",
+  "type": "module",
+  "scripts": {
+    "compile": "compact compile ClinicalTrialCredential.compact --target typescript --outDir ./managed",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test ./scripts/*.test.js",
+    "deploy:devnet": "node scripts/deploy.js --devnet",
+    "issue:demo": "node scripts/issue-demo-credential.js --devnet",
+    "verify:demo": "node scripts/check-credential.js --devnet"
+  },
+  "dependencies": {
+    "@midnight-ntwrk/compact-runtime": "^0.22.0",
+    "@midnight-ntwrk/midnight-js-network-id": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "peerDependencies": {
+    "@midnight-ntwrk/compact-js": "^2.5.1"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "license": "Apache-2.0"
+}
