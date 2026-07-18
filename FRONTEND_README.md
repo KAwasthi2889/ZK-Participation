@@ -1,7 +1,7 @@
 # CIPHER
 
 <div align="center">
-  <img src="src/imports/CIPHER_Final_Logo.png" alt="CIPHER Logo" width="120" />
+
 
   <h3>Confidential Issuance of Participation Credentials for Healthcare Eligibility & Research</h3>
 
