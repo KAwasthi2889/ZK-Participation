@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIPHER — Hackathon Pitch Deck</title>
+<style>
+:root{--bg:#0b132b;--card:#131c3e;--accent:#3B5BFF;--cyan:#4FCBFF;--success:#22C55E;--danger:#E03550;--text:#e8ecf5;--muted:#8b95b8;}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+.slide{display:none;height:100vh;width:100vw;padding:8vh 8vw;flex-direction:column;justify-content:center;position:relative}
+.slide.active{display:flex}
+.slide-number{position:absolute;top:3vh;right:4vw;font-size:12px;color:var(--muted);letter-spacing:2px}
+.logo{position:absolute;top:3vh;left:4vw;display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;letter-spacing:1px}
+.logo svg{width:28;height:28}
+h1{font-family:'Manrope',sans-serif;font-size:clamp(2.5rem,5vw,5rem);font-weight:800;line-height:1.08;letter-spacing:-0.02em}
+h2{font-family:'Manrope',sans-serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;margin-bottom:2vh}
+h3{font-size:clamp(1rem,1.8vw,1.4rem);font-weight:600;margin-bottom:1vh}
+p,li{font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.7;color:var(--muted);max-width:65ch}
+ul{list-style:none;padding:0}ul li{position:relative;padding-left:1.5rem;margin-bottom:0.6rem}ul li::before{content:"";position:absolute;left:0;top:0.65em;width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.grid{display:grid;gap:2rem;margin-top:3vh}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid rgba(59,91,255,0.18);border-radius:1.2rem;padding:2rem}
+.card-glow{box-shadow:0 0 50px rgba(59,91,255,0.08)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
+.badge-cyan{background:rgba(79,203,255,0.12);color:var(--cyan);border:1px solid rgba(79,203,255,0.25)}
+.badge-green{background:rgba(34,197,94,0.12);color:var(--success);border:1px solid rgba(34,197,94,0.25)}
+.badge-red{background:rgba(224,53,80,0.12);color:var(--danger);border:1px solid rgba(224,53,80,0.25)}
+.flow{display:flex;align-items:center;gap:1rem;justify-content:center;margin-top:4vh}
+.flow-step{text-align:center;max-width:220px}
+.flow-step .icon{width:64px;height:64px;border-radius:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.8rem}
+.flow-arrow{color:var(--muted);font-size:1.5rem}
+.highlight{background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.big-number{font-family:'Manrope',sans-serif;font-size:5rem;font-weight:800;color:var(--accent);opacity:0.3;line-height:1}
+.demo-step{display:flex;align-items:start;gap:1.5rem;margin-bottom:2rem}
+.demo-step .num{font-family:'Manrope',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);min-width:3rem}
+.demo-step .content h4{font-size:1.1rem;font-weight:600;margin-bottom:0.3rem;color:var(--text)}
+.demo-step .content p{font-size:0.95rem;margin:0}
+.controls{position:fixed;bottom:4vh;left:50%;transform:translateX(-50%);display:flex;gap:1rem;z-index:100}
+.controls button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(59,91,255,0.3);background:var(--card);color:var(--text);cursor:pointer;font-size:1.2rem;transition:all 0.2s}
+.controls button:hover{background:var(--accent);border-color:var(--accent)}
+.controls .progress{position:absolute;bottom:-2vh;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);white-space:nowrap}
+@media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.flow{flex-direction:column}.flow-arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide active" id="s1">
+<div class="slide-number">01 / 10</div>
+<div class="logo">
+<svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g1" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g1)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>
+CIPHER
+</div>
+<h1 class="highlight">Prove Participation.<br>Reveal Nothing.</h1>
+<p style="margin-top:2vh;max-width:50ch">Confidential clinical trial credentials powered by Zero-Knowledge Proofs and the Midnight blockchain. Privacy-preserving proof of participation — without exposing identity, condition, or trial details.</p>
+<div style="margin-top:4vh;display:flex;gap:1rem;flex-wrap:wrap">
+<span class="badge badge-cyan">Midnight Hackathon 2026</span>
+<span class="badge badge-green">ZK-Participation</span>
+<span class="badge badge-red">30-Hour Sprint</span>
+</div>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide" id="s2">
+<div class="slide-number">02 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g2" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g2)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:4vh">The Problem</h2>
+<div class="grid grid-2">
+<div class="card">
+<h3 style="color:var(--danger)">❌ Current Process</h3>
+<ul style="margin-top:1rem">
+<li>Patient shares PDF with full name</li>
+<li>Hospital name visible</li>
+<li>Disease / condition exposed</li>
+<li>Trial identifier disclosed</li>
+<li>Medical records leaked</li>
+<li>Doctor signatures revealed</li>
+</ul>
+</div>
+<div class="card card-glow" style="border-color:rgba(34,197,94,0.3)">
+<h3 style="color:var(--success)">✅ What Verifier Actually Needs</h3>
+<p style="margin-top:1rem;font-size:1.3rem;font-weight:600;color:var(--text)">One binary answer:</p>
+<p style="margin-top:0.5rem;font-size:1.1rem">"Did this person legitimately participate in an approved clinical trial?"</p>
+<p style="margin-top:1rem;font-size:0.9rem;color:var(--muted)">Nothing else. Not the trial name. Not the hospital. Not the diagnosis. Not the medication.</p>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 3: THE SOLUTION -->
+<div class="slide" id="s3">
+<div class="slide-number">03 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g3" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g3)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:2vh">Our Solution: <span class="highlight">CIPHER</span></h2>
+<p>A confidential digital credential stored on Midnight's zero-knowledge blockchain. The patient controls when proofs are generated. The verifier receives only the proof result.</p>
+<div class="flow" style="margin-top:5vh">
+<div class="flow-step">
+<div class="icon" style="background:rgba(59,91,255,0.15)">🏥</div>
+<h3>Sponsor</h3>
+<p style="font-size:0.85rem">Issues confidential credential to participant's wallet</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<div class="icon" style="background:rgba(79,203,255,0.15)">👤</div>
+<h3>Patient</h3>
+<p style="font-size:0.85rem">Generates ZK proof from credential — reveals nothing</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<div class="icon" style="background:rgba(34,197,94,0.15)">✓</div>
+<h3>Verifier</h3>
+<p style="font-size:0.85rem">Submits proof, receives Valid/Invalid only</p>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 4: HOW IT WORKS (TECH) -->
+<div class="slide" id="s4">
+<div class="slide-number">04 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g4" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g4)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:2vh">Why Midnight?</h2>
+<p style="margin-bottom:3vh">A public blockchain would expose every credential. Midnight provides the primitives that make medical privacy on-chain possible.</p>
+<div class="grid grid-4">
+<div class="card" style="text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">🔒</div>
+<h3>Confidential State</h3>
+<p style="font-size:0.85rem">Credential data never appears on the public ledger</p>
+</div>
+<div class="card" style="text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">🛡️</div>
+<h3>ZK Proofs</h3>
+<p style="font-size:0.85rem">Prove possession without revealing contents</p>
+</div>
+<div class="card" style="text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">👁️</div>
+<h3>Selective Disclosure</h3>
+<p style="font-size:0.85rem">Patient chooses what (if anything) to reveal</p>
+</div>
+<div class="card" style="text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">⚡</div>
+<h3>Non-Custodial</h3>
+<p style="font-size:0.85rem">No third party holds patient data</p>
+</div>
+</div>
+<div style="margin-top:3vh;text-align:center">
+<p style="font-size:0.9rem;color:var(--muted)">Built with Compact · React/TypeScript · Midnight Devnet</p>
+</div>
+</div>
+
+<!-- SLIDE 5: SMART CONTRACT -->
+<div class="slide" id="s5">
+<div class="slide-number">05 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g5" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g5)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:2vh">Smart Contract: <span class="highlight">ClinicalTrialCredential</span></h2>
+<p>416-line Compact contract. 8 circuits. Compiled and verified.</p>
+<div class="grid grid-2" style="margin-top:3vh">
+<div>
+<h3>Circuits</h3>
+<ul style="margin-top:1rem">
+<li><strong>issueCredential</strong> — Sponsor-only authorization</li>
+<li><strong>revokeCredential</strong> — Instant on-chain revocation</li>
+<li><strong>generateProof</strong> — Patient witness verification</li>
+<li><strong>verifyProof</strong> — Public verification</li>
+<li><strong>hasActiveCredential</strong> — Status query</li>
+<li><strong>isRevoked</strong> — Revocation check</li>
+<li><strong>getCredentialHash</strong> — Commitment lookup</li>
+<li><strong>getCredentialCount</strong> — Issuance metrics</li>
+</ul>
+</div>
+<div>
+<h3>Privacy Model</h3>
+<div class="card" style="margin-top:1rem">
+<table style="width:100%;font-size:0.9rem;border-collapse:collapse">
+<tr style="border-bottom:1px solid rgba(59,91,255,0.1)"><td style="padding:8px 0">Patient identity</td><td style="padding:8px 0;color:var(--success);font-weight:600">NEVER on-chain</td></tr>
+<tr style="border-bottom:1px solid rgba(59,91,255,0.1)"><td style="padding:8px 0">Trial details</td><td style="padding:8px 0;color:var(--success);font-weight:600">NEVER on-chain</td></tr>
+<tr style="border-bottom:1px solid rgba(59,91,255,0.1)"><td style="padding:8px 0">Completion status</td><td style="padding:8px 0;color:var(--success);font-weight:600">NEVER on-chain</td></tr>
+<tr style="border-bottom:1px solid rgba(59,91,255,0.1)"><td style="padding:8px 0">Issue date</td><td style="padding:8px 0;color:var(--success);font-weight:600">NEVER on-chain</td></tr>
+<tr><td style="padding:8px 0">Proof result (valid/invalid)</td><td style="padding:8px 0;color:var(--danger);font-weight:600">Public</td></tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 6: DEMO SCENARIO -->
+<div class="slide" id="s6">
+<div class="slide-number">06 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g6" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g6)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:3vh">Live Demo: <span class="highlight">2 Minutes</span></h2>
+<div class="demo-step"><div class="num">01</div><div class="content"><h4>Sponsor: Connect & Issue</h4><p>Sign in as <code>sponsor@cipher.com</code>. Connect wallet. Issue credential to patient address <code>mn1_7f3a...</code> for trial NCT-2024-0041. Credential stored in confidential state.</p></div></div>
+<div class="demo-step"><div class="num">02</div><div class="content"><h4>Patient: Generate Proof</h4><p>Sign in as <code>patient@cipher.com</code>. Connect wallet. Click "Generate Proof" — the smart contract re-computes the commitment hash from the patient's private witness. Returns a ZK proof JSON.</p></div></div>
+<div class="demo-step"><div class="num">03</div><div class="content"><h4>Verifier: Submit & Validate</h4><p>Sign in as <code>verifier@cipher.com</code>. Paste the proof. Click "Verify". Contract checks: credential exists? commitment matches? not revoked? Result: <span style="color:var(--success);font-weight:600">✅ Valid</span></p></div></div>
+<div style="margin-top:2vh"><span class="badge badge-cyan">Total demo time: 90 seconds</span></div>
+</div>
+
+<!-- SLIDE 7: WHAT WE BUILT -->
+<div class="slide" id="s7">
+<div class="slide-number">07 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g7" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g7)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:2vh">What We Built in 30 Hours</h2>
+<div class="grid grid-3">
+<div class="card card-glow">
+<h3>Frontend</h3>
+<p style="font-size:0.9rem">React + TypeScript + Tailwind. 3 role dashboards. 1 landing page. 1 auth flow. ZK-native design. Fully responsive.</p>
+<div style="margin-top:1rem"><span class="badge badge-cyan">Person 1</span></div>
+</div>
+<div class="card card-glow">
+<h3>Smart Contract</h3>
+<p style="font-size:0.9rem">Compact contract. 8 circuits. 416 lines. Prover/verifier keys generated. TypeScript SDK compiled. Privacy guarantees enforced.</p>
+<div style="margin-top:1rem"><span class="badge badge-cyan">Person 2</span></div>
+</div>
+<div class="card card-glow">
+<h3>Integration</h3>
+<p style="font-size:0.9rem">Drop-in bridge replaces 5 mock functions. 1-line import change. No UI modifications. MIGRATION.md with step-by-step guide.</p>
+<div style="margin-top:1rem"><span class="badge badge-cyan">Person 3</span></div>
+</div>
+</div>
+<div style="margin-top:3vh;display:flex;gap:1rem;justify-content:center">
+<div class="card" style="text-align:center;min-width:140px"><div class="big-number">416</div><p style="font-size:0.85rem">Lines of Compact</p></div>
+<div class="card" style="text-align:center;min-width:140px"><div class="big-number">8</div><p style="font-size:0.85rem">Circuits</p></div>
+<div class="card" style="text-align:center;min-width:140px"><div class="big-number">0</div><p style="font-size:0.85rem">Lines of patient data leaked</p></div>
+</div>
+</div>
+
+<!-- SLIDE 8: COMPETITIVE EDGE -->
+<div class="slide" id="s8">
+<div class="slide-number">08 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g8" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g8)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:2vh">Why This Wins</h2>
+<div class="grid grid-2">
+<div>
+<h3>Against Traditional Systems</h3>
+<ul>
+<li>No PDFs to forge or leak</li>
+<li>No database breaches (confidential state)</li>
+<li>No third-party data storage</li>
+<li>Patient controls disclosure</li>
+</ul>
+</div>
+<div>
+<h3>Against Public Blockchains</h3>
+<ul>
+<li>Ethereum / Solana = every credential is public</li>
+<li>Midnight = credentials are encrypted</li>
+<li>Only proof results are public</li>
+<li>HIPAA-ready by architecture</li>
+</ul>
+</div>
+</div>
+<div class="card" style="margin-top:3vh;text-align:center">
+<h3 class="highlight" style="font-size:1.5rem">"The only healthcare credential system where the blockchain itself cannot read your medical data."</h3>
+</div>
+</div>
+
+<!-- SLIDE 9: FUTURE -->
+<div class="slide" id="s9">
+<div class="slide-number">09 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g9" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g9)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h2 style="margin-bottom:2vh">Roadmap</h2>
+<div class="grid grid-3">
+<div class="card">
+<h3 style="color:var(--cyan)">Now</h3>
+<ul style="font-size:0.9rem;margin-top:1rem">
+<li>✅ Contract compiles (8 circuits)</li>
+<li>✅ Frontend with 3 dashboards</li>
+<li>✅ Drop-in blockchain bridge</li>
+<li>✅ Hackathon demo ready</li>
+</ul>
+</div>
+<div class="card">
+<h3 style="color:var(--accent)">Next (Post-Hackathon)</h3>
+<ul style="font-size:0.9rem;margin-top:1rem">
+<li>Deploy to Midnight devnet</li>
+<li>Real wallet integration</li>
+<li>Multi-sponsor registry</li>
+<li>Credential expiry automation</li>
+</ul>
+</div>
+<div class="card">
+<h3 style="color:var(--success)">Vision</h3>
+<ul style="font-size:0.9rem;margin-top:1rem">
+<li>Insurance claim verification</li>
+<li>Research enrollment eligibility</li>
+<li>Academic participation proof</li>
+<li>Cross-border credential portability</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 10: CTA -->
+<div class="slide" id="s10">
+<div class="slide-number">10 / 10</div>
+<div class="logo"><svg width="28" height="28" viewBox="0 0 100 100"><defs><linearGradient id="g10" x1="85" y1="15" x2="15" y2="85"><stop offset="0%" stop-color="#4A63FF"/><stop offset="100%" stop-color="#4FCBFF"/></linearGradient></defs><path d="M84.6 30A40 40 0 1 1 84.6 70" stroke="url(#g10)" stroke-width="9" fill="none" stroke-linecap="round"/></svg>CIPHER</div>
+<h1 class="highlight" style="text-align:center">Prove Participation.<br>Reveal Nothing.</h1>
+<p style="text-align:center;margin-top:2vh;max-width:50ch;margin-left:auto;margin-right:auto">Built on Midnight. Powered by Zero-Knowledge Proofs. Designed for healthcare privacy.</p>
+<div style="margin-top:5vh;text-align:center">
+<p style="font-size:1.1rem;font-weight:600;color:var(--text)">GitHub: <span class="highlight">KAwasthi2889/ZK-Participation</span></p>
+<p style="margin-top:1rem;font-size:0.85rem;color:var(--muted)">Contract compiled · Demo ready · Privacy guaranteed</p>
+</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+<button onclick="prev()">‹</button>
+<button onclick="next()">›</button>
+<div class="progress" id="progress">1 / 10</div>
+</div>
+
+<script>
+let current=1;const total=10;
+function show(n){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');document.getElementById('progress').textContent=n+' / '+total;}
+function next(){if(current<total){current++;show(current);}}
+function prev(){if(current>1){current--;show(current);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev();});
+</script>
+</body>
+</html>
