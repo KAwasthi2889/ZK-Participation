@@ -148,3 +148,4 @@ These are outside the scope of the core privacy problem.
 4. A verifier submits the proof and receives "Valid".
 
 Throughout the demo, no personal information, trial details, or medical records are ever revealed.
+
