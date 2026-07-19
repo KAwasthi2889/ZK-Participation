@@ -82,6 +82,8 @@ export const VerifierDashboard = ({ user }: { user: AuthUser }) => {
 
     if (outcome === "valid") {
       toast.success("Proof verified — valid participant");
+    } else if (outcome === "revoked") {
+      toast.error("Credential has been revoked by the sponsor");
     } else {
       toast.error("Proof is invalid");
     }
@@ -91,7 +93,7 @@ export const VerifierDashboard = ({ user }: { user: AuthUser }) => {
       proofId: `ZKP-${Math.random().toString(36).slice(2, 10)}...`,
       timestamp: new Date().toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }),
       purpose: "Manual Verification",
-      result: outcome === "valid" ? "valid" : "invalid",
+      result: outcome === "valid" ? "valid" : outcome === "revoked" ? "revoked" : "invalid",
       disclosed: outcome === "valid" ? "Participation only" : "None",
     };
     setVerifications((p) => [rec, ...p]);
@@ -285,6 +287,15 @@ export const VerifierDashboard = ({ user }: { user: AuthUser }) => {
                   </div>
                   <p className="text-base font-extrabold" style={{ fontFamily: "Manrope, sans-serif", color: DANGER }}>Invalid Proof</p>
                   <p className="text-xs text-muted-foreground text-center">This proof could not be verified. It may be malformed, expired, or from a revoked credential.</p>
+                </motion.div>
+              )}
+              {result === "revoked" && !verifying && (
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="flex flex-col items-center py-8 gap-3">
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: `${DANGER}10`, boxShadow: `0 0 24px ${DANGER}15`, border: `1px solid ${DANGER}25` }}>
+                    <XCircle size={28} style={{ color: DANGER }} />
+                  </div>
+                  <p className="text-base font-extrabold" style={{ fontFamily: "Manrope, sans-serif", color: DANGER }}>Credential Revoked</p>
+                  <p className="text-xs text-muted-foreground text-center">This proof is cryptographically valid, but the underlying credential was permanently revoked by the issuing sponsor.</p>
                 </motion.div>
               )}
             </Card>
