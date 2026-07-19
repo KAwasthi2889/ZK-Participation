@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, ShieldCheck, Shield, History, Settings, CheckCircle2, XCircle, Search, Filter, ScanLine, Copy, FileText, Upload, Globe, Key, Clock, BadgeCheck, AlertCircle, Fingerprint, CheckCircle, ArrowRight, Lock, ChevronDown, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { LayoutDashboard, ShieldCheck, Shield, History, Settings, CheckCircle2, XCircle, Search, Filter, Upload, Key, Fingerprint, CheckCircle, ArrowRight, Lock, ChevronDown, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
 import { AuthUser, NavItem, VerificationRecord, StepState, VerifyResult } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER, MOCK_VERIFICATIONS } from '../../constants';
 import { Card, StatCard, PrimaryBtn, GhostBtn, StatusBadge, SettingsPanel } from '../../components/ui/Primitives';
@@ -24,7 +24,24 @@ export const VerifierDashboard = ({ user }: { user: AuthUser }) => {
   const [tab, setTab]                   = useState("dashboard");
   const [proofInput, setProofInput]     = useState("");
   const [verifying, setVerifying]       = useState(false);
-  const [stepStates, setStepStates]     = useState<StepState[]>(Array(5).fill("idle"));
+  const [stepStates, setStepStates] = useState<StepState[]>(Array(5).fill("idle"));
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      if (ev.target?.result) {
+        setProofInput(ev.target.result as string);
+        setResult(null);
+        setStepStates(Array(5).fill("idle"));
+      }
+    };
+    reader.readAsText(file);
+    // Reset input so the same file can be uploaded again if cleared
+    e.target.value = '';
+  };
   const [result, setResult]             = useState<VerifyResult>(null);
 
   // History table
@@ -155,7 +172,8 @@ export const VerifierDashboard = ({ user }: { user: AuthUser }) => {
                 <p className="text-xs text-muted-foreground">Paste a patient's ZK proof to verify on Midnight.</p>
               </div>
               {/* Upload option */}
-              <button className="flex items-center justify-center gap-2 p-3 rounded-xl border border-dashed border-border hover:border-primary/40 hover:bg-secondary transition-all text-xs text-muted-foreground">
+              <input type="file" accept=".json" className="hidden" ref={fileInputRef} onChange={handleFileUpload} />
+              <button onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center gap-2 p-3 rounded-xl border border-dashed border-border hover:border-primary/40 hover:bg-secondary transition-all text-xs text-muted-foreground">
                 <Upload size={13} /> Upload proof file (.json)
               </button>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">

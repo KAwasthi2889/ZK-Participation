@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, FileText, XCircle, History, Settings, Search, Copy, CheckCircle2, AlertTriangle, Shield, CheckCircle, Wallet, ChevronRight, Lock, Filter, ChevronDown, ChevronLeft, Activity } from 'lucide-react';
+import { LayoutDashboard, FileText, XCircle, History, Settings, Search, AlertTriangle, CheckCircle, Wallet, ChevronRight, Lock, Filter, ChevronDown, ChevronLeft, Activity } from 'lucide-react';
 import { AuthUser, NavItem, CredentialRecord, CredStatus } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER, MOCK_CREDENTIALS } from '../../constants';
 import { Card, StatCard, InputField, SelectField, PrimaryBtn, GhostBtn, StatusBadge, ConfirmModal } from '../../components/ui/Primitives';
