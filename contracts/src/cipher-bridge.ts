@@ -126,11 +126,11 @@ async function recomputeCredentialCommitment(
     statusByte.length + dateBytes.length + salt.length
   );
   let offset = 0;
-  combined.set(data.participantPk, offset); offset += 32;
-  combined.set(data.trialId, offset); offset += 32;
-  combined.set(data.sponsorPk, offset); offset += 32;
-  combined.set(statusByte, offset); offset += 1;
-  combined.set(dateBytes, offset); offset += 8;
+  combined.set(data.participantPk, offset); offset += data.participantPk.length;
+  combined.set(data.trialId, offset); offset += data.trialId.length;
+  combined.set(data.sponsorPk, offset); offset += data.sponsorPk.length;
+  combined.set(statusByte, offset); offset += statusByte.length;
+  combined.set(dateBytes, offset); offset += dateBytes.length;
   combined.set(salt, offset);
 
   const hash = await crypto.subtle.digest("SHA-256", combined as any);
@@ -147,7 +147,7 @@ async function recomputeCredentialCommitment(
  * Mock signature: connectWallet(): Promise<string>
  * Returns: wallet address string (e.g. "mn1_7f3a9b...c291")
  */
-export async function connectWallet(): Promise<string> {
+export async function connectWallet(role?: string): Promise<string> {
   let state = loadState();
 
   if (!state) {
@@ -159,9 +159,22 @@ export async function connectWallet(): Promise<string> {
     saveState(state);
   }
 
-  // Derive a deterministic display address from the secret
+  // Derive a deterministic but visually distinct display address depending on the role
   const secret = fromBase64(state.secret);
-  const pk = await derivePatientPublicKey(secret);
+  let pk: Uint8Array;
+  if (role === "sponsor") {
+    pk = await deriveSponsorPublicKey(secret);
+  } else if (role === "verifier") {
+    const domain = new TextEncoder().encode("zkpart:verifier:pk:v1");
+    const combined = new Uint8Array(domain.length + secret.length);
+    combined.set(domain);
+    combined.set(secret, domain.length);
+    const hash = await crypto.subtle.digest("SHA-256", combined as any);
+    pk = new Uint8Array(hash);
+  } else {
+    pk = await derivePatientPublicKey(secret);
+  }
+  
   const hexPrefix = bytesToHex(pk).slice(0, 20);
   return `mn1_${hexPrefix}`;
 }

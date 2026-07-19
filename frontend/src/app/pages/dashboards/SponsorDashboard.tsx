@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, FileText, XCircle, History, Settings, Search, AlertTriangle, CheckCircle, Wallet, ChevronRight, Lock, Filter, ChevronDown, ChevronLeft, Activity } from 'lucide-react';
 import { AuthUser, NavItem, CredentialRecord, CredStatus } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER, MOCK_CREDENTIALS } from '../../constants';
@@ -92,7 +92,34 @@ export const SponsorDashboard = ({ user }: { user: AuthUser }) => {
   const [histPage, setHistPage]           = useState(1);
   const PAGE_SIZE = 5;
 
-  const [creds, setCreds]                 = useState<CredentialRecord[]>(MOCK_CREDENTIALS);
+  const [creds, setCreds]                 = useState<CredentialRecord[]>([]);
+
+  useEffect(() => {
+    try {
+      const state = localStorage.getItem("cipher_midnight_state");
+      if (state) {
+        const parsed = JSON.parse(state);
+        if (parsed.hasCredential && parsed.sponsorPk) {
+          const type = parsed.completionStatus ? "Completion" : "Enrollment";
+          const dateStr = new Date(parsed.issueDate * 1000).toISOString().split("T")[0];
+          // Since we can't easily convert base64 to hex in the browser without a library, we just mock the display address using the base64 string directly sliced.
+          const ptAddr = "mn1_" + parsed.participantPk.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().slice(0, 20);
+          
+          setCreds([{
+            id: `CR-001`,
+            patient: ptAddr,
+            trial: parsed.trialId || "NCT-UNASSIGNED",
+            type: type,
+            status: "active",
+            issuedAt: dateStr,
+            expiry: new Date(parsed.issueDate * 1000 + 365 * 86400000).toISOString().split("T")[0],
+          }]);
+        }
+      }
+    } catch (e) {
+      // Ignore
+    }
+  }, []);
 
   const navItems: NavItem[] = [
     { id: "dashboard", label: "Dashboard",          icon: LayoutDashboard },
@@ -105,7 +132,7 @@ export const SponsorDashboard = ({ user }: { user: AuthUser }) => {
   const handleConnect = async () => {
     setConnecting(true);
     const id = toast.loading("Connecting wallet...");
-    try { const a = await connectWallet(); setWallet(a); toast.success("Wallet connected!", { id }); }
+    try { const a = await connectWallet(user.role); setWallet(a); toast.success("Wallet connected!", { id }); }
     catch { toast.error("Connection failed", { id }); }
     finally { setConnecting(false); }
   };

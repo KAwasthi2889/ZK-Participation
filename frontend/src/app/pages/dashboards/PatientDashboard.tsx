@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Shield, Key, Activity, Settings, Copy, CheckCircle2, FileText, ShieldCheck, Download, ScanLine, Wallet, ArrowRight, ChevronLeft, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react';
 import { AuthUser, NavItem, CredentialRecord } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER } from '../../constants';
@@ -30,17 +30,41 @@ export const PatientDashboard = ({ user }: { user: AuthUser }) => {
   const [generating, setGenerating]   = useState(false);
   const [proof, setProof]             = useState("");
 
-  const patientCreds: CredentialRecord[] = [
-    { id: "CR-002", patient: "mn1_9f1e...3a4b", trial: "NCT-2024-0041", type: "Clinical Trial",  status: "active",  issuedAt: "2025-07-02", expiry: "2026-07-02" },
-    { id: "CR-005", patient: "mn1_8f4b...2c3d", trial: "NCT-2024-0042", type: "Phase III",       status: "active",  issuedAt: "2025-07-08", expiry: "2026-07-08" },
-  ];
+  const [patientCreds, setPatientCreds] = useState<CredentialRecord[]>([]);
 
-  const activity = [
-    { icon: FileText,   color: PRIMARY,  label: "Credential Issued",  sub: "NCT-2024-0041", time: "Jul 2, 2025" },
-    { icon: Key,        color: CYAN,     label: "Proof Generated",    sub: "Insurance Claim",time: "Jul 10, 2025"},
-    { icon: ShieldCheck,color: SUCCESS,  label: "Proof Verified",     sub: "Prism Analytics",time: "Jul 10, 2025"},
-    { icon: FileText,   color: PRIMARY,  label: "Credential Issued",  sub: "NCT-2024-0042", time: "Jul 8, 2025" },
-  ];
+  useEffect(() => {
+    try {
+      const state = localStorage.getItem("cipher_midnight_state");
+      if (state) {
+        const parsed = JSON.parse(state);
+        if (parsed.hasCredential && parsed.trialId) {
+          const type = parsed.completionStatus ? "Completion" : "Enrollment";
+          const dateStr = new Date(parsed.issueDate * 1000).toISOString().split("T")[0];
+          const newCred: CredentialRecord = {
+            id: `CR-00${patientCreds.length + 1}`,
+            patient: "mn1_" + parsed.participantPk.slice(0, 8) + "...xxxx",
+            trial: parsed.trialId,
+            type: type,
+            status: "active",
+            issuedAt: dateStr,
+            expiry: new Date(parsed.issueDate * 1000 + 365 * 86400000).toISOString().split("T")[0],
+          };
+          
+          // Only add if not already added to prevent infinite loop/duplicates
+          setPatientCreds(prev => {
+            if (!prev.find(c => c.trial === parsed.trialId && c.issuedAt === dateStr)) {
+              return [newCred, ...prev];
+            }
+            return prev;
+          });
+        }
+      }
+    } catch (e) {
+      // Ignore parse errors
+    }
+  }, []);
+
+  const activity: any[] = [];
 
   const navItems: NavItem[] = [
     { id: "dashboard",  label: "Dashboard",      icon: LayoutDashboard },
@@ -53,7 +77,7 @@ export const PatientDashboard = ({ user }: { user: AuthUser }) => {
   const handleConnect = async () => {
     setConnecting(true);
     const id = toast.loading("Connecting wallet...");
-    try { const a = await connectWallet(); setWallet(a); toast.success("Wallet connected!", { id }); }
+    try { const a = await connectWallet(user.role); setWallet(a); toast.success("Wallet connected!", { id }); }
     catch { toast.error("Connection failed", { id }); }
     finally { setConnecting(false); }
   };

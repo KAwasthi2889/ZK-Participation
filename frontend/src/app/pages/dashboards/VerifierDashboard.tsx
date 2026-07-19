@@ -82,18 +82,20 @@ export const VerifierDashboard = ({ user }: { user: AuthUser }) => {
 
     if (outcome === "valid") {
       toast.success("Proof verified — valid participant");
-      const rec: VerificationRecord = {
-        id: `VR-${String(verifications.length + 1).padStart(3, "0")}`,
-        proofId: `ZKP-${Math.random().toString(36).slice(2, 10)}...`,
-        timestamp: new Date().toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }),
-        purpose: "Manual Verification",
-        result: "valid",
-        disclosed: "Participation only",
-      };
-      setVerifications((p) => [rec, ...p]);
     } else {
       toast.error("Proof is invalid");
     }
+
+    const rec: VerificationRecord = {
+      id: `VR-${String(verifications.length + 1).padStart(3, "0")}`,
+      proofId: `ZKP-${Math.random().toString(36).slice(2, 10)}...`,
+      timestamp: new Date().toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }),
+      purpose: "Manual Verification",
+      result: outcome === "valid" ? "valid" : "invalid",
+      disclosed: outcome === "valid" ? "Participation only" : "None",
+    };
+    setVerifications((p) => [rec, ...p]);
+
     setVerifying(false);
   };
 
