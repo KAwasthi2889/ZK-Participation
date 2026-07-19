@@ -55,6 +55,13 @@ export const StatusBadge = ({ status }: { status: CredStatus | "valid" | "invali
   );
 };
 
+export const SettingsPanel = () => (
+  <Card className="p-6">
+    <h2 className="text-base font-bold mb-5" style={{ fontFamily: "Manrope, sans-serif" }}>Settings</h2>
+    <p className="text-sm text-muted-foreground">Settings are not available in demo mode.</p>
+  </Card>
+);
+
 export const InputField = ({ label, type = "text", value, onChange, placeholder, required, mono }: {
   label: string; type?: string; value: string; onChange: (v: string) => void; placeholder?: string; required?: boolean; mono?: boolean;
 }) => (
@@ -81,7 +88,7 @@ export const SelectField = ({ label, value, onChange, options }: {
   </div>
 );
 
-export const StatCard = ({ label, value, sub, icon: Icon, color }: { label: string; value: string | number; sub?: string; icon: React.FC<{size?: number; className?: string}>; color: string }) => (
+export const StatCard = ({ label, value, sub, icon: Icon, color }: { label: string; value: string | number; sub?: string; icon: React.FC<{size?: number; className?: string; style?: React.CSSProperties}>; color: string }) => (
   <Card className="p-5">
     <div className="flex items-start justify-between gap-3">
       <div>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { AuthUser, NavItem } from '../../types';
+import { AuthUser } from '../../types';
 import { PRIMARY, CYAN } from '../../constants';
+import { Menu } from 'lucide-react';
+import { CipherLogo } from '../ui/Icons';
 
 // DASHBOARD LAYOUT SHELL
 // Uses sticky sidebar + scrollable main to prevent any clipping

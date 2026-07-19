@@ -28,7 +28,7 @@ export interface VerificationRecord {
   proofId: string;
   timestamp: string;
   purpose: string;
-  result: "valid" | "invalid";
+  result: "valid" | "invalid" | "revoked";
   disclosed: string;
 }
 

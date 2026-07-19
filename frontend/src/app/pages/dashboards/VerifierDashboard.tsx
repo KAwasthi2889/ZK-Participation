@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, ShieldCheck, History, Settings, CheckCircle2, XCircle, Search, Filter, ScanLine, Copy, FileText, Upload, Globe, Key, Clock, BadgeCheck, AlertCircle } from 'lucide-react';
-import { AuthUser, NavItem, VerificationRecord } from '../../types';
+import { LayoutDashboard, ShieldCheck, Shield, History, Settings, CheckCircle2, XCircle, Search, Filter, ScanLine, Copy, FileText, Upload, Globe, Key, Clock, BadgeCheck, AlertCircle, Fingerprint, CheckCircle, ArrowRight, Lock, ChevronDown, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { AuthUser, NavItem, VerificationRecord, StepState, VerifyResult } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER, MOCK_VERIFICATIONS } from '../../constants';
-import { Card, StatCard, PrimaryBtn, GhostBtn, StatusBadge } from '../../components/ui/Primitives';
+import { Card, StatCard, PrimaryBtn, GhostBtn, StatusBadge, SettingsPanel } from '../../components/ui/Primitives';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { verifyProof, delay } from '../../services/blockchain';
 import { toast } from 'sonner';

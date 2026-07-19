@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Shield, Key, Activity, Settings, Copy, CheckCircle2, FileText, ShieldCheck, Download, AlertCircle, Fingerprint, ScanLine, Wallet } from 'lucide-react';
+import { LayoutDashboard, Shield, Key, Activity, Settings, Copy, CheckCircle2, FileText, ShieldCheck, Download, AlertCircle, Fingerprint, ScanLine, Wallet, ArrowRight, ChevronLeft, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react';
 import { AuthUser, NavItem, CredentialRecord } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER } from '../../constants';
-import { Card, StatCard, PrimaryBtn, GhostBtn, StatusBadge, SelectField } from '../../components/ui/Primitives';
+import { Card, StatCard, PrimaryBtn, GhostBtn, StatusBadge, SelectField, SettingsPanel } from '../../components/ui/Primitives';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { connectWallet, generateProof } from '../../services/blockchain';
 import { toast } from 'sonner';
@@ -53,7 +53,7 @@ export const PatientDashboard = ({ user }: { user: AuthUser }) => {
   const handleConnect = async () => {
     setConnecting(true);
     const id = toast.loading("Connecting wallet...");
-    try { const a = await connectWallet(user.role); setWallet(a); toast.success("Wallet connected!", { id }); }
+    try { const a = await connectWallet(); setWallet(a); toast.success("Wallet connected!", { id }); }
     catch { toast.error("Connection failed", { id }); }
     finally { setConnecting(false); }
   };

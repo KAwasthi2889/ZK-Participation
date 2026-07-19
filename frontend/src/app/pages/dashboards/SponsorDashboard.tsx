@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, FileText, XCircle, History, Settings, Search, Copy, CheckCircle2, AlertTriangle, Shield, CheckCircle, Wallet } from 'lucide-react';
+import { LayoutDashboard, FileText, XCircle, History, Settings, Search, Copy, CheckCircle2, AlertTriangle, Shield, CheckCircle, Wallet, ChevronRight, Lock, Filter, ChevronDown, ChevronLeft, Activity } from 'lucide-react';
 import { AuthUser, NavItem, CredentialRecord, CredStatus } from '../../types';
 import { PRIMARY, CYAN, SUCCESS, DANGER, MOCK_CREDENTIALS } from '../../constants';
 import { Card, StatCard, InputField, SelectField, PrimaryBtn, GhostBtn, StatusBadge, ConfirmModal } from '../../components/ui/Primitives';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { connectWallet, issueCredential, revokeCredential } from '../../services/blockchain';
 import { toast } from 'sonner';
+import { motion } from 'motion/react';
 
 const Toggle = ({ on, onToggle }: { on: boolean; onToggle: () => void }) => (
   <button onClick={onToggle} className={`w-10 h-5 rounded-full relative transition-colors ${on ? 'bg-primary' : 'bg-secondary border border-border'}`}>
@@ -104,7 +105,7 @@ export const SponsorDashboard = ({ user }: { user: AuthUser }) => {
   const handleConnect = async () => {
     setConnecting(true);
     const id = toast.loading("Connecting wallet...");
-    try { const a = await connectWallet(user.role); setWallet(a); toast.success("Wallet connected!", { id }); }
+    try { const a = await connectWallet(); setWallet(a); toast.success("Wallet connected!", { id }); }
     catch { toast.error("Connection failed", { id }); }
     finally { setConnecting(false); }
   };
